@@ -25,16 +25,18 @@ def parse_detail_page(response: Response) -> None:
         "title": response.css("h1::text").get().strip(),
         "company": response.css(".job-details--title::text").get().strip(),
         "salary": response.css("h1 .public-salary-item::text").get(),
+        # "technologies": delete_empty_cells([text for text in response.css(
+        #     ".job-additional-info--body")[0].css("span::text").getall()]),
         "category": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
             ".job-additional-info--body")[0].css("div::text").getall()]),
-        "additional": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
-            ".job-additional-info--body")[1].css("div::text").getall()]),
+        # "additional": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
+        #     ".job-additional-info--body")[1].css("div::text").getall()]),
         "publicated": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
             ".text-muted::text").getall()]),
         "description": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
             ".profile-page-section")[0].css("div::text").getall()]),
-        "about_company": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
-            ".profile-page-section")[1].css("div::text").getall()]),
+        # "about_company": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
+        #     ".profile-page-section")[1].css("div::text").getall()]),
     }
 
 
