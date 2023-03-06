@@ -5,7 +5,9 @@ from scrapy.http import Response
 
 def delete_double_symb(text: list) -> str:
     if len(text) > 1:
-        out = [list(text)[0], ]
+        out = [
+            list(text)[0],
+        ]
         for i in range(1, len(text)):
             if text[i] == text[i - 1] and text[i] in " .,;":
                 continue
@@ -25,18 +27,28 @@ def parse_detail_page(response: Response) -> None:
         "title": response.css("h1::text").get().strip(),
         "company": response.css(".job-details--title::text").get().strip(),
         "salary": response.css("h1 .public-salary-item::text").get(),
-        # "technologies": delete_empty_cells([text for text in response.css(
-        #     ".job-additional-info--body")[0].css("span::text").getall()]),
-        "category": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
-            ".job-additional-info--body")[0].css("div::text").getall()]),
-        # "additional": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
-        #     ".job-additional-info--body")[1].css("div::text").getall()]),
-        "publicated": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
-            ".text-muted::text").getall()]),
-        "description": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
-            ".profile-page-section")[0].css("div::text").getall()]),
-        # "about_company": delete_empty_cells([text.replace("\n", "").strip() for text in response.css(
-        #     ".profile-page-section")[1].css("div::text").getall()]),
+        "category": delete_empty_cells(
+            [
+                text.replace("\n", "").strip()
+                for text in response.css(".job-additional-info--body")[0]
+                .css("div::text")
+                .getall()
+            ]
+        ),
+        "publicated": delete_empty_cells(
+            [
+                text.replace("\n", "").strip()
+                for text in response.css(".text-muted::text").getall()
+            ]
+        ),
+        "description": delete_empty_cells(
+            [
+                text.replace("\n", "").strip()
+                for text in response.css(".profile-page-section")[0]
+                .css("div::text")
+                .getall()
+            ]
+        ),
     }
 
 
@@ -46,9 +58,7 @@ class DjinniPythonSpider(scrapy.Spider):
     start_urls = ["https://djinni.co/jobs/?primary_keyword=Python"]
 
     def parse(self, response: Response, **kwargs):
-        urls_on_page = response.css(
-            "ul.list-jobs .order-1 a::attr(href)"
-        ).getall()
+        urls_on_page = response.css("ul.list-jobs .order-1 a::attr(href)").getall()
         for url in urls_on_page:
             url_full = response.urljoin(url)
             yield scrapy.Request(url_full, parse_detail_page)
