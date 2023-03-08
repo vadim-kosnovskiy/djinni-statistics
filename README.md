@@ -33,3 +33,16 @@ The application allows you to track the most popular technologies among open vac
 
    ```
 - Open Jupyter notebook da.ipynb and run
+
+
+![Technology popularity](technology_popularity.png)
+
+![Number of vacancies by developer level](number_of_vacancies_by_developer_level.png)
+
+![Requirements to junior developers](requirements_to_junior_developers.png)
+
+![Requirements to middle developers](requirements_to_middle_developers.png)
+
+![Requirements to senior developers](requirements_to_senior_developers.png)
+
+![Requirements to none level developers](requirements_to_none_level_developers.png)
